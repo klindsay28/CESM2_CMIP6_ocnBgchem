@@ -1,0 +1,20 @@
+name: CESM2_CMIP6_ocnBgchem
+channels:
+- conda-forge
+- defaults
+dependencies:
+- pip
+- python=3.7
+# core pydata
+- dask
+- bottleneck
+- jupyterlab
+- xarray=0.13
+# serialization
+- netcdf4
+# Misc
+- cf_units
+- cftime
+- esmpy
+- pip:
+  - git+https://github.com/NCAR/esmlab.git
