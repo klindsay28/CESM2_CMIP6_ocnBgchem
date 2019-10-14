@@ -3,26 +3,29 @@
 import cftime
 import numpy as np
 
-def copy_fill_settings_ds(ds_in, ds_out):
+def set_fill_encoding_ds(ds):
     """
-    propagate _FillValue and missing_value settings from vars in ds_in to ds_out
-    return ds_out
+    call set_fill_encoding_da for each variable in ds
+    return ds
     """
-    for varname in ds_in.variables:
-        if varname in ds_out.variables:
-            copy_fill_settings_da(ds_in[varname], ds_out[varname])
-    return ds_out
+    for varname in ds.variables:
+        set_fill_encoding_da(ds[varname])
+    return ds
 
-def copy_fill_settings_da(da_in, da_out):
+def set_fill_encoding_da(da):
     """
-    propagate _FillValue and missing_value settings from da_in to da_out
-    return da_out
+    if '_FillValue' and 'missing_value' are both in encoding,
+        overwrite 'missing_value' with '_FillValue', to ensure they are consistent
+    if '_FillValue' is not in encoding, add it, with value None
+        to ensure that xr.to_netcdf doesn't add it to generated file, with NaN value
+    return da
     """
-    if '_FillValue' in da_in.encoding:
-        da_out.encoding['_FillValue'] = da_in.encoding['_FillValue']
+    if '_FillValue' in da.encoding:
+        if 'missing_value' in da.encoding:
+            da.encoding['missing_value'] = da.encoding['_FillValue']
     else:
-        da_out.encoding['_FillValue'] = None
-    return da_out
+        da.encoding['_FillValue'] = None
+    return da
 
 def dim_cnt_check(ds, varname, dim_cnt):
     """confirm that varname in ds has dim_cnt dimensions"""
