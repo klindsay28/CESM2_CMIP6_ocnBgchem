@@ -1,0 +1,13 @@
+cancel data/all
+
+define symbol dir_in = /glade/collections/cdg/data/CMIP6/CMIP/NCAR/CESM2/historical/r7i1p1f1/Omon/fgco2/gn/latest
+set data "($dir_in)/fgco2_Omon_CESM2_historical_r7i1p1f1_gn_195001-199912.nc"
+set data "($dir_in)/fgco2_Omon_CESM2_historical_r7i1p1f1_gn_200001-201412.nc"
+
+define symbol dir_out = /glade/scratch/klindsay/CESM2_CMIP6_ocnBgchem_tst
+set data "($dir_out)/fgco2_Omon_CESM2_historical_r7i1p1f1_gn_1999-2000_mon_clim.nc"
+
+let var = fgco2
+
+stats abs(var[d=3])
+stats abs((var[d=1,l=589:600] + var[d=2,l=1:12])/2.0 - var[d=3])
