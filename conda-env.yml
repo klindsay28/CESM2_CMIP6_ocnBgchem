@@ -9,7 +9,7 @@ dependencies:
 - dask
 - bottleneck
 - jupyterlab
-- xarray=0.13
+- xarray=0.14
 # serialization
 - netcdf4
 # Misc
