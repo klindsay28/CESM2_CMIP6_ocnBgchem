@@ -1,5 +1,6 @@
 """utility functions"""
 
+import cf_units
 import cftime
 import numpy as np
 
@@ -84,3 +85,10 @@ def time_year_plus_frac(ds, time_name):
     tvals_days = cftime.date2num(tvals_cftime, 'days since 0000-01-01', calendar='noleap')
 
     return tvals_days / 365.0
+
+def reset_units(ds, varname, units_out):
+    """reset units of var to units_out"""
+    Unit_in = cf_units.Unit(ds[varname].attrs['units'])
+    Unit_out = cf_units.Unit(units_out)
+    ds[varname] = Unit_in.convert(ds[varname].values, Unit_out)
+    ds[varname].attrs['units'] = units_out
