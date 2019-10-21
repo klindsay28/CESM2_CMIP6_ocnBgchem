@@ -1,0 +1,44 @@
+cancel data/all
+
+define symbol varname = fgco2
+let var = 86400.0*365.0*1.0e3/12.0*($varname)
+
+define symbol varname = tos
+let var = ($varname)
+
+define symbol varname = mlotst
+let var = ($varname)
+
+define symbol varname = sos
+let var = ($varname)
+
+set data ($varname)_anom_Omon_CESM2_historical_r1i1p1f1_gn_1995-2014_mon_clim.nc
+set data ($varname)_anom_Omon_CESM2_historical_r2i1p1f1_gn_1995-2014_mon_clim.nc
+set data ($varname)_anom_Omon_CESM2_historical_r3i1p1f1_gn_1995-2014_mon_clim.nc
+set data ($varname)_anom_Omon_CESM2_historical_r4i1p1f1_gn_1995-2014_mon_clim.nc
+set data ($varname)_anom_Omon_CESM2_historical_r5i1p1f1_gn_1995-2014_mon_clim.nc
+set data ($varname)_anom_Omon_CESM2_historical_r6i1p1f1_gn_1995-2014_mon_clim.nc
+set data ($varname)_anom_Omon_CESM2_historical_r7i1p1f1_gn_1995-2014_mon_clim.nc
+set data ($varname)_anom_Omon_CESM2_historical_r8i1p1f1_gn_1995-2014_mon_clim.nc
+set data ($varname)_anom_Omon_CESM2_historical_r9i1p1f1_gn_1995-2014_mon_clim.nc
+set data ($varname)_anom_Omon_CESM2_historical_r10i1p1f1_gn_1995-2014_mon_clim.nc
+set data ($varname)_anom_Omon_CESM2_historical_r11i1p1f1_gn_1995-2014_mon_clim.nc
+
+let var2 = var*var
+
+let var_rms = var2[i=@ave,j=@ave,l=@ave]^0.5
+
+list var_rms[d=1], var_rms[d=2], var_rms[d=3], var_rms[d=4], var_rms[d=5], var_rms[d=6], \
+     var_rms[d=7], var_rms[d=8], var_rms[d=9], var_rms[d=10], var_rms[d=11]
+
+let var_rms = var2[i=@ave,j=@ave]^0.5
+
+plot/thick=3 var_rms[d=1], var_rms[d=2], var_rms[d=3], var_rms[d=4], var_rms[d=5], var_rms[d=6], \
+             var_rms[d=7], var_rms[d=8], var_rms[d=9], var_rms[d=10], var_rms[d=11]
+
+message
+
+let var_rms = var2[i=@ave,l=@ave]^0.5
+
+plot/thick=3 var_rms[d=1], var_rms[d=2], var_rms[d=3], var_rms[d=4], var_rms[d=5], var_rms[d=6], \
+             var_rms[d=7], var_rms[d=8], var_rms[d=9], var_rms[d=10], var_rms[d=11]
